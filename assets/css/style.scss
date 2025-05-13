@@ -1,0 +1,17 @@
+// Add these variables if not existing
+:root {
+  --global-theme-color: #0078d7;
+  --global-text-color-light: #666;
+}
+
+// Profile section responsive adjustments
+@media screen and (max-width: 768px) {
+  .profile-container {
+    flex-direction: column;
+    text-align: center;
+  }
+  .profile-img {
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+}
