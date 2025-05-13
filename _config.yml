@@ -223,9 +223,9 @@ collections:
   portfolio:
     output: true
     permalink: /:collection/:path/
-  conferences_workshops:
+   conferences_workshops:
     output: true
-    permalink: /conferences-workshops/:path/
+    permalink: /conferences-workshops/:name/
 
 
 # These settings control how pages and collections are included in the site
