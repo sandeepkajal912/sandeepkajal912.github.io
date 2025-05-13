@@ -269,7 +269,7 @@ defaults:
   # _portfolio
   - scope:
       path: ""
-      type: portfolio
+      type: conferences_workshops
     values:
       layout: single
       author_profile: true
