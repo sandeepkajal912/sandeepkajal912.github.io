@@ -1,0 +1,72 @@
+<div class="profile">
+  {% if site.data.profile.image %}
+    <img src="{{ site.data.profile.image | relative_url }}" alt="Profile photo" class="profile-image">
+  {% endif %}
+  
+  <h2 class="profile-name">{{ site.data.profile.name }}</h2>
+  <p class="profile-title">{{ site.data.profile.title }}</p>
+  <p class="profile-affiliation">{{ site.data.profile.affiliation }}</p>
+  
+  <div class="profile-contacts">
+    {% if site.data.profile.email %}
+      <p><i class="fas fa-envelope"></i> {{ site.data.profile.email }}</p>
+    {% endif %}
+    {% if site.data.profile.phone %}
+      <p><i class="fas fa-phone"></i> {{ site.data.profile.phone }}</p>
+    {% endif %}
+    {% if site.data.profile.office %}
+      <p><i class="fas fa-map-marker-alt"></i> {{ site.data.profile.office }}</p>
+    {% endif %}
+  </div>
+  
+  <div class="profile-links">
+    {% if site.data.profile.cv %}
+      <a href="{{ site.data.profile.cv }}" class="profile-link"><i class="fas fa-file-pdf"></i> CV</a>
+    {% endif %}
+    {% if site.data.profile.google_scholar %}
+      <a href="{{ site.data.profile.google_scholar }}" class="profile-link"><i class="ai ai-google-scholar"></i> Scholar</a>
+    {% endif %}
+  </div>
+</div>
+
+<style>
+.profile {
+  padding: 1.5rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.profile-image {
+  width: 100%;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  border: 3px solid #f0f0f0;
+}
+
+.profile-name {
+  margin: 0.5rem 0;
+  font-size: 1.3rem;
+}
+
+.profile-title, .profile-affiliation {
+  margin: 0.3rem 0;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.profile-contacts p {
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+}
+
+.profile-links {
+  margin-top: 1rem;
+}
+
+.profile-link {
+  display: block;
+  margin: 0.5rem 0;
+  color: var(--theme-color);
+}
+</style>
