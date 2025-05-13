@@ -1,0 +1,60 @@
+---
+layout: default
+---
+<div class="post">
+  <header class="post-header">
+    <h1 class="post-title">{{ page.title }}</h1>
+  </header>
+
+  <div class="categories">
+    <button class="category-btn active" onclick="filterItems('all')">All</button>
+    <button class="category-btn" onclick="filterItems('conference')">Conferences</button>
+    <button class="category-btn" onclick="filterItems('workshop')">Workshops</button>
+  </div>
+
+  <div class="items-container">
+    {% assign sorted_items = site.conferences_workshops | sort: 'date' | reverse %}
+    {% for item in sorted_items %}
+    <div class="item" data-category="{{ item.category }}">
+      <h3>{{ item.title }}</h3>
+      <p class="item-meta">
+        {{ item.venue }} • {{ item.date | date: "%B %Y" }}
+        {% if item.slides %}<a href="{{ item.slides }}">[Slides]</a>{% endif %}
+      </p>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+.category-btn {
+  margin-right: 10px;
+  padding: 5px 15px;
+  background: #f0f0f0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.category-btn.active {
+  background: #0078d7;
+  color: white;
+}
+.item { display: none; }
+.item[data-category="conference"] { background: #f8f4ff; }
+.item[data-category="workshop"] { background: #f4f8ff; }
+</style>
+
+<script>
+function filterItems(category) {
+  document.querySelectorAll('.category-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent.toLowerCase().includes(category) || category === 'all');
+  });
+  
+  document.querySelectorAll('.item').forEach(item => {
+    item.style.display = (category === 'all' || item.dataset.category === category) 
+      ? 'block' : 'none';
+  });
+}
+// Show all by default
+document.addEventListener('DOMContentLoaded', () => filterItems('all'));
+</script>
