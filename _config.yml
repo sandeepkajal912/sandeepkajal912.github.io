@@ -9,7 +9,7 @@
 # Basic Site Settings
 locale                   : "en-US"
 site_theme               : "default"
-title                    : "Academic Profile"
+title                    : "Academic-Profile"
 title_separator          : "-"
 name                     : &name "Sandeep"
 description              : &description "personal description"
