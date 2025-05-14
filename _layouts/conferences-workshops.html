@@ -1,161 +1,60 @@
 ---
 layout: default
 ---
-<div class="container">
-  <!-- Left Sidebar -->
-  <div class="sidebar">
-    {% include sidebar.html %}
+<div class="post">
+  <header class="post-header">
+    <h1 class="post-title">{{ page.title }}</h1>
+  </header>
+
+  <div class="categories">
+    <button class="category-btn active" onclick="filterItems('all')">All</button>
+    <button class="category-btn" onclick="filterItems('conference')">Conferences</button>
+    <button class="category-btn" onclick="filterItems('workshop')">Workshops</button>
   </div>
 
-  <!-- Main Content -->
-  <div class="content">
-    <header class="page-header">
-      <h1>{{ page.title }}</h1>
-    </header>
-
-    <!-- Filter Buttons -->
-    <div class="filter-buttons">
-      <button class="btn active" data-filter="all">All</button>
-      <button class="btn" data-filter="conference">Conferences</button>
-      <button class="btn" data-filter="workshop">Workshops</button>
+  <div class="items-container">
+    {% assign sorted_items = site.conferences_workshops | sort: 'date' | reverse %}
+    {% for item in sorted_items %}
+    <div class="item" data-category="{{ item.category }}">
+      <h3>{{ item.title }}</h3>
+      <p class="item-meta">
+        {{ item.venue }} • {{ item.date | date: "%B %Y" }}
+        {% if item.slides %}<a href="{{ item.slides }}">[Slides]</a>{% endif %}
+      </p>
     </div>
-
-    <!-- Events Listing -->
-    <div class="events">
-      {% assign sorted_events = site.conferences_workshops | sort: 'date' | reverse %}
-      {% for event in sorted_events %}
-      <div class="event" data-category="{{ event.category }}">
-        <h3>{{ event.title }}</h3>
-        <div class="event-meta">
-          <span class="event-type {{ event.category }}">{{ event.category | capitalize }}</span>
-          <span class="event-date">
-            {% if event.date_range %}
-              {{ event.date_range }}
-            {% else %}
-              {{ event.date | date: "%B %-d, %Y" }}
-            {% endif %}
-          </span>
-          <span class="event-venue">{{ event.venue }}</span>
-          {% if event.location %}
-            <span class="event-location">({{ event.location }})</span>
-          {% endif %}
-        </div>
-        {% if event.content %}
-        <div class="event-content">
-          {{ event.content }}
-        </div>
-        {% endif %}
-      </div>
-      {% endfor %}
-    </div>
+    {% endfor %}
   </div>
 </div>
 
 <style>
-/* Layout Structure */
-.container {
-  display: flex;
-  gap: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1rem;
-}
-
-.sidebar {
-  flex: 0 0 250px;
-  position: sticky;
-  top: 1rem;
-  align-self: flex-start;
-}
-
-.content {
-  flex: 1;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-  }
-  .sidebar {
-    position: static;
-    width: 100%;
-  }
-}
-
-/* Existing event styles... */
-.filter-buttons {
-  margin: 1.5rem 0;
-  text-align: center;
-}
-
-.btn {
-  margin: 0 5px;
+.category-btn {
+  margin-right: 10px;
   padding: 5px 15px;
   background: #f0f0f0;
   border: none;
   border-radius: 4px;
   cursor: pointer;
 }
-
-.btn.active {
-  background: var(--theme-color);
+.category-btn.active {
+  background: #0078d7;
   color: white;
 }
-
-.event {
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #eee;
-}
-
-.event-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 1rem;
-  margin: 0.5rem 0;
-  color: #666;
-  font-size: 0.9rem;
-}
-
-.event-type {
-  padding: 0.2rem 0.5rem;
-  border-radius: 3px;
-  font-weight: 500;
-}
-
-.event-type.conference {
-  background: #e6f2ff;
-  color: #0066cc;
-}
-
-.event-type.workshop {
-  background: #fff2e6;
-  color: #cc6600;
-}
+.item { display: none; }
+.item[data-category="conference"] { background: #f8f4ff; }
+.item[data-category="workshop"] { background: #f4f8ff; }
 </style>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  const buttons = document.querySelectorAll('.btn');
-  const events = document.querySelectorAll('.event');
-  
-  buttons.forEach(button => {
-    button.addEventListener('click', function() {
-      // Update active button
-      buttons.forEach(btn => btn.classList.remove('active'));
-      this.classList.add('active');
-      
-      // Filter events
-      const filter = this.dataset.filter;
-      events.forEach(event => {
-        if (filter === 'all' || event.dataset.category === filter) {
-          event.style.display = 'block';
-        } else {
-          event.style.display = 'none';
-        }
-      });
-    });
+function filterItems(category) {
+  document.querySelectorAll('.category-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent.toLowerCase().includes(category) || category === 'all');
   });
-});
+  
+  document.querySelectorAll('.item').forEach(item => {
+    item.style.display = (category === 'all' || item.dataset.category === category) 
+      ? 'block' : 'none';
+  });
+}
+// Show all by default
+document.addEventListener('DOMContentLoaded', () => filterItems('all'));
 </script>
