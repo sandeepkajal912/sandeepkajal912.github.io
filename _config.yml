@@ -277,7 +277,7 @@ defaults:
       comments: true
   # _conferences_workshops
   - scope:
-      path: ""
+      path: "_conferences_workshops"
       type: conferences_workshops
     values:
       layout: single
