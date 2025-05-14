@@ -88,10 +88,10 @@ publication_category:
 # conferences_workshop_cateogry
 # Add this to your existing config
 conferences_workshops_categories:
-  - name: "Conferences"
-    id: "conference"
-  - name: "Workshops"
-    id: "workshop"
+  conference:
+    title: 'Conferences'
+  workshop:
+    title: 'Workshop'
  
 # Site Settings
 teaser                   :  # filename of teaser fallback teaser image placed in /images/, .e.g. "500x300.png"
