@@ -87,12 +87,11 @@ publication_category:
 
 # conferences_workshop_cateogry
 # Add this to your existing config
-conferences_workshops:
-  categories:
-    - name: "Conferences"
-      id: "conference"
-    - name: "Workshops"
-      id: "workshop"
+conferences_workshops_categories:
+  - name: "Conferences"
+    id: "conference"
+  - name: "Workshops"
+    id: "workshop"
  
 # Site Settings
 teaser                   :  # filename of teaser fallback teaser image placed in /images/, .e.g. "500x300.png"
@@ -234,7 +233,10 @@ collections:
     permalink: /:collection/:path/
   conferences_workshops:
     output: true
-    permalink: /conferences-workshops/:path/
+    permalink: /conferences-workshops/:name/
+  talks:
+    output: true
+    permalink: /:collection/:path/
 
 
 # These settings control how pages and collections are included in the site
@@ -278,9 +280,9 @@ defaults:
   # _conferences_workshops
   - scope:
       path: "_conferences_workshops"
-      type: conferences_workshops
+      type: "conferences_workshops"
     values:
-      layout: single
+      layout: "conference_workshop"
       author_profile: true
       share: true
       comment: true
