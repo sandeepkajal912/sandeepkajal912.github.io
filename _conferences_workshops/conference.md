@@ -1,7 +1,7 @@
 ---
 title: "Advancements in AI Research"
 venue: "International AI Conference 2023"
-permalink: /conferences_workshops/2009-10-01-paper-title-number-1
+permalink: /conferences-workshops/2009-10-01-paper-title-number-1
 date: 2023-05-15
 category: conference
 slides: /assets/slides/ai-2023.pdf
