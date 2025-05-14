@@ -1,0 +1,34 @@
+<div class="sidebar sticky">
+  <div class="sidebar-personal-info">
+    <div class="sidebar-personal-info-section">
+      <img class="avatar" src="{{ site.avatar | default: '/assets/img/avatar.jpg' }}" alt="avatar" />
+      <h3>{{ site.author.name }}</h3>
+      <p>{{ site.author.affiliation }}</p>
+    </div>
+    
+    <div class="sidebar-personal-info-section">
+      <p><i class="fas fa-envelope"></i> {{ site.author.email }}</p>
+      {% if site.author.social %}
+      <p>
+        {% if site.author.social.twitter %}
+        <a href="https://twitter.com/{{ site.author.social.twitter }}" class="social-link"><i class="fab fa-twitter"></i></a>
+        {% endif %}
+        {% if site.author.social.github %}
+        <a href="https://github.com/{{ site.author.social.github }}" class="social-link"><i class="fab fa-github"></i></a>
+        {% endif %}
+        {% if site.author.social.linkedin %}
+        <a href="https://linkedin.com/in/{{ site.author.social.linkedin }}" class="social-link"><i class="fab fa-linkedin"></i></a>
+        {% endif %}
+      </p>
+      {% endif %}
+    </div>
+    
+    <div class="sidebar-menu">
+      <h3>Conferences & Workshops</h3>
+      <ul>
+        <li><a href="#conferences">Conferences</a></li>
+        <li><a href="#workshops">Workshops</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
