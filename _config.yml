@@ -223,12 +223,9 @@ collections:
   portfolio:
     output: true
     permalink: /:collection/:path/
-  conferences:
+  conferences_workshops:
     output: true
-    permalink: /conferences-workshops/conferences/:path/
-  workshops:
-    output: true
-    permalink: /conferences-workshops/workshops/:path/
+    permalink: /conferences-workshops/:path/
   talks:
     output: true
     permalink: /:collection/:path/
@@ -274,10 +271,10 @@ defaults:
       comments: true
   # _conferences_workshops
   - scope:
-      path: ""
-      type: conferences
+      path: "_conferences_workshops"
+      type: conferences-workshops
     values:
-      layout: conference
+      layout: conferences_workshops
       author_profile: true
       share: true
       comment: true
