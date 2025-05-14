@@ -286,6 +286,7 @@ defaults:
       type: talks
     values:
       layout: talk
+      author_profile: true
       share: true
 
 
