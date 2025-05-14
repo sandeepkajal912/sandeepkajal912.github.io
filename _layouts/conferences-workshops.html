@@ -1,30 +1,18 @@
 ---
 layout: default
 ---
-<div class="post">
-  <!-- Profile Header (pulled from config.yml) -->
-  <header class="post-header">
-    {% if site.avatar %}
-      <img class="profile-img" src="{{ site.avatar | relative_url }}" alt="profile picture">
-    {% endif %}
-    <h1 class="post-title">{{ page.title }}</h1>
-    <p class="post-description">
-      {{ site.title }}<br>
-      {{ site.affiliation }}
-    </p>
-    
-    <!-- Social links (if present in config.yml) -->
-    {% if site.social %}
-    <div class="social">
-      <div class="contact-icons">
-        {% include social.html %}
-      </div>
-    </div>
-    {% endif %}
-  </header>
+<div class="container">
+  <!-- Left Sidebar -->
+  <div class="sidebar">
+    {% include sidebar.html %}
+  </div>
 
-  <!-- Main Content Section -->
-  <article>
+  <!-- Main Content -->
+  <div class="content">
+    <header class="page-header">
+      <h1>{{ page.title }}</h1>
+    </header>
+
     <!-- Filter Buttons -->
     <div class="filter-buttons">
       <button class="btn active" data-filter="all">All</button>
@@ -36,67 +24,138 @@ layout: default
     <div class="events">
       {% assign sorted_events = site.conferences_workshops | sort: 'date' | reverse %}
       {% for event in sorted_events %}
-        <div class="event" data-category="{{ event.category }}">
-          <h3>{{ event.title }}</h3>
-          <div class="event-meta">
-            <span class="event-type {{ event.category }}">{{ event.category | capitalize }}</span>
-            <span class="event-date">
-              {% if event.date_range %}
-                {{ event.date_range }}
-              {% else %}
-                {{ event.date | date: "%B %-d, %Y" }}
-              {% endif %}
-            </span>
-            <span class="event-venue">{{ event.venue }}</span>
-            {% if event.location %}
-              <span class="event-location">({{ event.location }})</span>
+      <div class="event" data-category="{{ event.category }}">
+        <h3>{{ event.title }}</h3>
+        <div class="event-meta">
+          <span class="event-type {{ event.category }}">{{ event.category | capitalize }}</span>
+          <span class="event-date">
+            {% if event.date_range %}
+              {{ event.date_range }}
+            {% else %}
+              {{ event.date | date: "%B %-d, %Y" }}
             {% endif %}
-          </div>
-          {% if event.content %}
-            <div class="event-content">
-              {{ event.content }}
-            </div>
+          </span>
+          <span class="event-venue">{{ event.venue }}</span>
+          {% if event.location %}
+            <span class="event-location">({{ event.location }})</span>
           {% endif %}
         </div>
+        {% if event.content %}
+        <div class="event-content">
+          {{ event.content }}
+        </div>
+        {% endif %}
+      </div>
       {% endfor %}
     </div>
-  </article>
+  </div>
 </div>
 
 <style>
-/* Profile header styling */
-.profile-img {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  object-fit: cover;
+/* Layout Structure */
+.container {
+  display: flex;
+  gap: 2rem;
+  max-width: 1200px;
   margin: 0 auto;
-  display: block;
+  padding: 1rem;
 }
 
-.post-header {
+.sidebar {
+  flex: 0 0 250px;
+  position: sticky;
+  top: 1rem;
+  align-self: flex-start;
+}
+
+.content {
+  flex: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+  .sidebar {
+    position: static;
+    width: 100%;
+  }
+}
+
+/* Existing event styles... */
+.filter-buttons {
+  margin: 1.5rem 0;
   text-align: center;
+}
+
+.btn {
+  margin: 0 5px;
+  padding: 5px 15px;
+  background: #f0f0f0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn.active {
+  background: var(--theme-color);
+  color: white;
+}
+
+.event {
   margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
 }
 
-.post-title {
-  margin-top: 1rem;
-  font-size: 2rem;
-}
-
-.post-description {
+.event-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
   margin: 0.5rem 0;
-  color: var(--global-text-color-light);
-  font-size: 1.1rem;
+  color: #666;
+  font-size: 0.9rem;
 }
 
-.social {
-  margin: 1rem 0;
+.event-type {
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+  font-weight: 500;
 }
 
-/* Rest of your existing styles... */
+.event-type.conference {
+  background: #e6f2ff;
+  color: #0066cc;
+}
+
+.event-type.workshop {
+  background: #fff2e6;
+  color: #cc6600;
+}
 </style>
 
 <script>
-// Your existing JavaScript for filtering...
+document.addEventListener('DOMContentLoaded', function() {
+  const buttons = document.querySelectorAll('.btn');
+  const events = document.querySelectorAll('.event');
+  
+  buttons.forEach(button => {
+    button.addEventListener('click', function() {
+      // Update active button
+      buttons.forEach(btn => btn.classList.remove('active'));
+      this.classList.add('active');
+      
+      // Filter events
+      const filter = this.dataset.filter;
+      events.forEach(event => {
+        if (filter === 'all' || event.dataset.category === filter) {
+          event.style.display = 'block';
+        } else {
+          event.style.display = 'none';
+        }
+      });
+    });
+  });
+});
 </script>
