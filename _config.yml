@@ -85,6 +85,13 @@ publication_category:
   conferences:
     title: 'Conference Papers'
 
+# conferences_workshop_cateogry
+conferences_workshop_cateogry:
+  conferences:
+    title: 'Conferences'
+  workshops:
+    title: 'Workshops'
+ 
 # Site Settings
 teaser                   :  # filename of teaser fallback teaser image placed in /images/, .e.g. "500x300.png"
 breadcrumbs              : false # true, false (default)
