@@ -1,77 +1,134 @@
 ---
 layout: default
 ---
-
-<div class="row">
+<div class="container">
   <!-- Left Sidebar -->
-  <div class="col-md-3">
-    {% include left_sidebar.html %}
+  <div class="sidebar">
+    {% include sidebar.html %}
   </div>
-  
-  <!-- Main Content -->
-  <div class="col-md-9">
-    <div class="post">
-      <header class="post-header">
-        <h1 class="post-title">{{ page.title }}</h1>
-      </header>
 
-      <article class="post-content">
-        {{ content }}
-        
-        <!-- Conferences Section -->
-        <section id="conferences" class="section">
-          <h2>Conferences</h2>
-          {% assign sorted_confs = site.conferences | sort: 'date_range' | reverse %}
-          {% for conf in sorted_confs %}
-          <div class="card mb-4">
-            <div class="card-body">
-              <h3 class="card-title">{{ conf.title }}</h3>
-              <div class="card-subtitle mb-2 text-muted">
-                <i class="far fa-calendar-alt"></i> {{ conf.date_range }} | 
-                <i class="fas fa-map-marker-alt"></i> {{ conf.venue }}
-              </div>
-              {% if conf.role %}
-              <p><strong>Role:</strong> {{ conf.role }}</p>
-              {% endif %}
-              {% if conf.paper_title %}
-              <p><strong>Presentation:</strong> "{{ conf.paper_title }}"</p>
-              {% endif %}
-              {{ conf.content | markdownify }}
-              {% if conf.link %}
-              <a href="{{ conf.link }}" class="btn btn-outline-primary btn-sm">Event Website</a>
-              {% endif %}
-            </div>
-          </div>
-          {% endfor %}
-        </section>
-        
-        <!-- Workshops Section -->
-        <section id="workshops" class="section">
-          <h2>Workshops</h2>
-          {% assign sorted_workshops = site.workshops | sort: 'date_range' | reverse %}
-          {% for workshop in sorted_workshops %}
-          <div class="card mb-4">
-            <div class="card-body">
-              <h3 class="card-title">{{ workshop.title }}</h3>
-              <div class="card-subtitle mb-2 text-muted">
-                <i class="far fa-calendar-alt"></i> {{ workshop.date_range }} | 
-                <i class="fas fa-map-marker-alt"></i> {{ workshop.venue }}
-              </div>
-              {% if workshop.role %}
-              <p><strong>Role:</strong> {{ workshop.role }}</p>
-              {% endif %}
-              {% if workshop.participants %}
-              <p><strong>Participants:</strong> {{ workshop.participants }}</p>
-              {% endif %}
-              {{ workshop.content | markdownify }}
-              {% if workshop.link %}
-              <a href="{{ workshop.link }}" class="btn btn-outline-primary btn-sm">Event Website</a>
-              {% endif %}
-            </div>
-          </div>
-          {% endfor %}
-        </section>
-      </article>
+  <!-- Main Content -->
+  <div class="content">
+    <h1>{{ page.title }}</h1>
+    
+    <!-- Category Tabs -->
+    <div class="category-tabs">
+      {% for category in site.conferences_workshops.categories %}
+        <button class="tab-btn {% if forloop.first %}active{% endif %}" 
+                onclick="openCategory(event, '{{ category.id }}')">
+          {{ category.name }}
+        </button>
+      {% endfor %}
     </div>
+
+    <!-- Category Content -->
+    {% for category in site.conferences_workshops.categories %}
+    <div id="{{ category.id }}" class="category-content" 
+         style="display: {% if forloop.first %}block{% else %}none{% endif %}">
+      {% assign items = site.conferences_workshops | where: "category", category.id | sort: "date" | reverse %}
+      
+      {% for item in items %}
+      <div class="item">
+        <h3>{{ item.title }}</h3>
+        <div class="item-meta">
+          <span class="venue">{{ item.venue }}</span>
+          <span class="date">
+            {% if item.date_range %}
+              {{ item.date_range }}
+            {% else %}
+              {{ item.date | date: "%B %Y" }}
+            {% endif %}
+          </span>
+          {% if item.location %}
+            <span class="location">{{ item.location }}</span>
+          {% endif %}
+        </div>
+        {% if item.content %}
+        <div class="item-description">
+          {{ item.content }}
+        </div>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    {% endfor %}
   </div>
 </div>
+
+<style>
+.container {
+  display: flex;
+  gap: 2rem;
+}
+
+.sidebar {
+  flex: 0 0 250px;
+}
+
+.content {
+  flex: 1;
+}
+
+.category-tabs {
+  margin: 2rem 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.tab-btn {
+  padding: 0.5rem 1.5rem;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.tab-btn.active {
+  border-bottom: 3px solid var(--theme-color);
+  font-weight: bold;
+}
+
+.category-content {
+  display: none;
+}
+
+.item {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.item-meta {
+  color: #666;
+  font-size: 0.9rem;
+  margin: 0.5rem 0;
+}
+
+.item-meta span {
+  margin-right: 1rem;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+}
+</style>
+
+<script>
+function openCategory(evt, categoryId) {
+  // Hide all category content
+  document.querySelectorAll('.category-content').forEach(content => {
+    content.style.display = 'none';
+  });
+  
+  // Remove active class from all buttons
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  
+  // Show current category and mark button as active
+  document.getElementById(categoryId).style.display = 'block';
+  evt.currentTarget.classList.add('active');
+}
+</script>
