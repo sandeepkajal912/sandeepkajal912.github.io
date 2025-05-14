@@ -274,10 +274,19 @@ defaults:
       comments: true
   # _conferences_workshops
   - scope:
-      path: "_conferences_workshops"
-      type: "conferences_workshops"
+      path: ""
+      type: conferences
     values:
-      layout: single
+      layout: conference
+      author_profile: true
+      share: true
+      comment: true
+      
+  - scope:
+      path: ""
+      type: workshops
+    values:
+      layout: workshop
       author_profile: true
       share: true
       comment: true
