@@ -1,5 +1,5 @@
 ---
-layout: conferences_workshops
+layout: archive
 title: "Conferences & Workshops"
 permalink: /conferences-workshops/
 author_profile: true
