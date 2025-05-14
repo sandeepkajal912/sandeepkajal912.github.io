@@ -1,7 +1,6 @@
 ---
-layout: conferences_workshops
+layout: archive
 title: Conferences & Workshops
 permalink: /conferences-workshops/
-nav: true
-nav_order: 3
+author_profile: true
 ---
