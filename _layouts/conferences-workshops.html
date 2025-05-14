@@ -1,60 +1,134 @@
 ---
 layout: default
 ---
-<div class="post">
-  <header class="post-header">
-    <h1 class="post-title">{{ page.title }}</h1>
-  </header>
-
-  <div class="categories">
-    <button class="category-btn active" onclick="filterItems('all')">All</button>
-    <button class="category-btn" onclick="filterItems('conference')">Conferences</button>
-    <button class="category-btn" onclick="filterItems('workshop')">Workshops</button>
+<div class="container">
+  <!-- Left Sidebar -->
+  <div class="sidebar">
+    {% include sidebar.html %}
   </div>
 
-  <div class="items-container">
-    {% assign sorted_items = site.conferences_workshops | sort: 'date' | reverse %}
-    {% for item in sorted_items %}
-    <div class="item" data-category="{{ item.category }}">
-      <h3>{{ item.title }}</h3>
-      <p class="item-meta">
-        {{ item.venue }} • {{ item.date | date: "%B %Y" }}
-        {% if item.slides %}<a href="{{ item.slides }}">[Slides]</a>{% endif %}
-      </p>
+  <!-- Main Content -->
+  <div class="content">
+    <h1>{{ page.title }}</h1>
+    
+    <!-- Category Tabs -->
+    <div class="category-tabs">
+      {% for category in site.conferences_workshops.categories %}
+        <button class="tab-btn {% if forloop.first %}active{% endif %}" 
+                onclick="openCategory(event, '{{ category.id }}')">
+          {{ category.name }}
+        </button>
+      {% endfor %}
+    </div>
+
+    <!-- Category Content -->
+    {% for category in site.conferences_workshops.categories %}
+    <div id="{{ category.id }}" class="category-content" 
+         style="display: {% if forloop.first %}block{% else %}none{% endif %}">
+      {% assign items = site.conferences_workshops | where: "category", category.id | sort: "date" | reverse %}
+      
+      {% for item in items %}
+      <div class="item">
+        <h3>{{ item.title }}</h3>
+        <div class="item-meta">
+          <span class="venue">{{ item.venue }}</span>
+          <span class="date">
+            {% if item.date_range %}
+              {{ item.date_range }}
+            {% else %}
+              {{ item.date | date: "%B %Y" }}
+            {% endif %}
+          </span>
+          {% if item.location %}
+            <span class="location">{{ item.location }}</span>
+          {% endif %}
+        </div>
+        {% if item.content %}
+        <div class="item-description">
+          {{ item.content }}
+        </div>
+        {% endif %}
+      </div>
+      {% endfor %}
     </div>
     {% endfor %}
   </div>
 </div>
 
 <style>
-.category-btn {
-  margin-right: 10px;
-  padding: 5px 15px;
-  background: #f0f0f0;
+.container {
+  display: flex;
+  gap: 2rem;
+}
+
+.sidebar {
+  flex: 0 0 250px;
+}
+
+.content {
+  flex: 1;
+}
+
+.category-tabs {
+  margin: 2rem 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.tab-btn {
+  padding: 0.5rem 1.5rem;
+  background: none;
   border: none;
-  border-radius: 4px;
+  border-bottom: 3px solid transparent;
   cursor: pointer;
+  font-size: 1rem;
 }
-.category-btn.active {
-  background: #0078d7;
-  color: white;
+
+.tab-btn.active {
+  border-bottom: 3px solid var(--theme-color);
+  font-weight: bold;
 }
-.item { display: none; }
-.item[data-category="conference"] { background: #f8f4ff; }
-.item[data-category="workshop"] { background: #f4f8ff; }
+
+.category-content {
+  display: none;
+}
+
+.item {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.item-meta {
+  color: #666;
+  font-size: 0.9rem;
+  margin: 0.5rem 0;
+}
+
+.item-meta span {
+  margin-right: 1rem;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+}
 </style>
 
 <script>
-function filterItems(category) {
-  document.querySelectorAll('.category-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.textContent.toLowerCase().includes(category) || category === 'all');
+function openCategory(evt, categoryId) {
+  // Hide all category content
+  document.querySelectorAll('.category-content').forEach(content => {
+    content.style.display = 'none';
   });
   
-  document.querySelectorAll('.item').forEach(item => {
-    item.style.display = (category === 'all' || item.dataset.category === category) 
-      ? 'block' : 'none';
+  // Remove active class from all buttons
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.classList.remove('active');
   });
+  
+  // Show current category and mark button as active
+  document.getElementById(categoryId).style.display = 'block';
+  evt.currentTarget.classList.add('active');
 }
-// Show all by default
-document.addEventListener('DOMContentLoaded', () => filterItems('all'));
 </script>
