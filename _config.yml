@@ -233,7 +233,7 @@ collections:
     permalink: /:collection/:path/
   conferences_workshops:
     output: true
-    permalink: /conferences-workshops/:name/
+    permalink: /conferences-workshops/:path/
   talks:
     output: true
     permalink: /:collection/:path/
@@ -282,7 +282,7 @@ defaults:
       path: "_conferences_workshops"
       type: "conferences_workshops"
     values:
-      layout: "conference_workshop"
+      layout: single
       author_profile: true
       share: true
       comment: true
