@@ -19,6 +19,7 @@ main:
     
   - title: "Conferences & Workshops"
     url: /conferences-workshops/
+    icon: fas fa-comments
         
   - title: "Blog Posts"
     url: /year-archive/
