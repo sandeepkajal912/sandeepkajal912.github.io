@@ -1,10 +1,9 @@
 ---
-title: "Advancements in AI Research"
-venue: "International AI Conference 2023"
-permalink: /conferences-workshops/conference
-date: 2023-05-15
-category: conferences
-slides: /assets/slides/ai-2023.pdf
-location: Virtual
+title: "AI in Healthcare"
+venue: "Global Medical Conference"
+date: 2023-09-15
+date_range: "15-18 September 2023"
+location: "Boston, MA"
+category: conference
+slides: "/slides/ai-healthcare-2023.pdf"
 ---
-Your talk description here...
