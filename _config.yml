@@ -84,14 +84,6 @@ publication_category:
     title: 'Journal Articles'    
   conferences:
     title: 'Conference Papers'
-
-# conferences_workshop_cateogry
-# Add this to your existing config
-conferences_workshops_categories:
-  conference:
-    title: 'Conferences'
-  workshop:
-    title: 'Workshop'
  
 # Site Settings
 teaser                   :  # filename of teaser fallback teaser image placed in /images/, .e.g. "500x300.png"
@@ -231,9 +223,12 @@ collections:
   portfolio:
     output: true
     permalink: /:collection/:path/
-  conferences_workshops:
+  conferences:
     output: true
-    permalink: /conferences-workshops/:path/
+    permalink: /conferences-workshops/conferences/:path/
+  workshops:
+    output: true
+    permalink: /conferences-workshops/workshops/:path/
   talks:
     output: true
     permalink: /:collection/:path/
