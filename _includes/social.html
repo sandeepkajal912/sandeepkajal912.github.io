@@ -1,0 +1,11 @@
+{% if site.social %}
+  <ul class="list-inline">
+    {% for item in site.social %}
+      <li class="list-inline-item">
+        <a href="{{ item.link }}" target="_blank" rel="noopener noreferrer">
+          <i class="{{ item.icon }}"></i>
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}
