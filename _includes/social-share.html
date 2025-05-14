@@ -13,3 +13,15 @@
 
   <a href="https://x.com/intent/post?text={{ base_path }}{{ page.url }}" class="btn btn--x" title="{{ site.data.ui-text[site.locale].share_on_label | default: 'Share on' }} X"><i class="fab fa-x-twitter" aria-hidden="true"></i><span> X (formerly Twitter)</span></a>
 </section>
+
+{% if site.social %}
+  <ul class="list-inline">
+    {% for item in site.social %}
+      <li class="list-inline-item">
+        <a href="{{ item.link }}" target="_blank" rel="noopener noreferrer">
+          <i class="{{ item.icon }}"></i>
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}
