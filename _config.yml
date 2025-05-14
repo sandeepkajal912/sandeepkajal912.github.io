@@ -86,7 +86,7 @@ publication_category:
     title: 'Conference Papers'
 
 # conferences_workshop_cateogry
-conferences_workshop_cateogry:
+conferences_workshops_cateogry:
   conferences:
     title: 'Conferences'
   workshops:
