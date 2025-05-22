@@ -1,7 +1,7 @@
 ---
 title: "Hands-on Machine Learning"
 venue: "Tech Education Summit"
-permalink: /conferences-workshops/2024-1-sample
+permalink: /conferences/2024-1-sample
 date: 2023-06-10
 date_range: "10 June 2023"
 location: "Virtual"
