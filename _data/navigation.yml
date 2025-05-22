@@ -18,7 +18,7 @@ main:
     url: /teaching/    
     
   - title: "Conferences & Workshops"
-    url: /conferences-workshops/
+    url: "/conferences/"
         
   - title: "Blog Posts"
     url: /year-archive/
